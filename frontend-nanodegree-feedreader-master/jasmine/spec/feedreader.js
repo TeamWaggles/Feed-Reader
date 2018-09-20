@@ -104,38 +104,38 @@ $(function() {
         });
 
     /* TODO: Write a new test suite named "New Feed Selection" */
-         describe('New Feed Selection', function () {
-            var oldEntries;
-            var newEntries;
-            beforeEach(function (done) {
-                loadFeed(0, function () {
-                    oldEntries = $('.entry-link');
-                    loadFeed(1, function () {
-                    newEntries = $('.entry-link');
+    describe('New Feed Selection', function() {
+	    var firstFeed, secondFeed;
+
+        // Ensures that the new feed is loaded via the loadFeed function
+		beforeEach(function(done) {
+            loadFeed(1, function() {
+
+                // Tests if first feed is loaded
+                console.log('First feed')
+
+                // Loads first entry and checks
+                firstFeed = $('.feed').html();
+                loadFeed(2, function() {
+
+                    // Tests if second feed is loaded
+                    console.log('Second feed')
                     done();
                 });
             });
+         });
+
+         afterEach(function() {
+            loadFeed(0);
         });
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
-        it('has new content', function () {
-            let count = [];
-            oldEntries.each(function () {
-                newEntries.each((idx, ele) => {
-                    if (ele.href === this.href) {
-                        count.push(this);
-                    }
-                });
-            });
-            expect(oldEntries).toBeDefined();
-            expect(oldEntries.length).toBeGreaterThan(0);
-            expect(newEntries).toBeDefined();
-            expect(newEntries.length).toBeGreaterThan(0);
-            expect(count).toBeDefined();
-            expect(count.length).toBe(0);
+
+
+
+		it('checks if two feeds are different', function() {
+
+            // Checks second feed
+            secondFeed = $('.feed').html();
+            expect(firstFeed).not.toEqual(secondFeed);
         });
-    });
- })
-})
+	});
+}())})
